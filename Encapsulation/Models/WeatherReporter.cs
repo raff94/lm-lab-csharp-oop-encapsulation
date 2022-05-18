@@ -1,61 +1,77 @@
 ﻿using System;
 namespace Encapsulation.Models
 {
+    public enum LocationCity { London, California, CapeTown, Unknown }
+
     public class WeatherReporter
     {
-        public string Location;
-        public double Temperature;
+        private readonly LocationCity Location;
+        private readonly double TemperatureInCelsius;
+        private const double MinTemperature = 10;
+        private const double MaxTemperature = 30;
 
-        public WeatherReporter(string location, double temperature)
+        private double TemperatureInFahrenheit() => CelsiusToFahrenheit(TemperatureInCelsius);
+        private double CelsiusToFahrenheit(double celsius) => (9.0 / 5.0) * celsius + 32;
+
+        public WeatherReporter(LocationCity location, double temperatureInCelsius)
         {
             Location = location;
-            Temperature = temperature;
+            TemperatureInCelsius = temperatureInCelsius;
         }
 
-        public string Print()
+        public string GetWeatherReport()
         {
-            double newTemp = (9.0 / 5.0) * Temperature + 32;
-            return $"I am in {Location} and it is {Check1()}. {Check2()}. The temperature in Fahrenheit is {newTemp}.";
+            return $"I am in {Location} and it is {GetLocationIcon()}. {GetTemperatureDescription()}. The temperature in Fahrenheit is {TemperatureInFahrenheit()}.";
         }
 
-        public string Check1()
+        public string GetLocationIcon()
         {
-            if (Location == "London")
+            string result = "";
+
+            switch (Location)
             {
-
-                return "🌦";
-
+                case LocationCity.London:
+                    {
+                        result = "🌦";
+                        break;
+                    }
+                case LocationCity.California:
+                    {
+                        result = "🌅";
+                        break;
+                    }
+                case LocationCity.CapeTown:
+                    {
+                        result = "🌤";
+                        break;
+                    }
+                default:
+                case LocationCity.Unknown:
+                    {
+                        result = "🔆";
+                        break;
+                    }
             }
-            else if (Location == "California")
-            {
 
-                return "🌅";
-
-            }
-            else if (Location == "Cape Town")
-            {
-
-                return "🌤";
-
-            }
-            return "🔆";
+            return result;
         }
 
-        public string Check2()
+        public string GetTemperatureDescription()
         {
-            if (Temperature > 30)
+            string result = "";
+
+            if (TemperatureInCelsius > MaxTemperature)
             {
-
-                return "It's too hot 🥵!";
-
+                result = "It's too hot 🥵!";
             }
-            else if (Temperature < 10)
+            else if (TemperatureInCelsius < MinTemperature)
             {
-
-                return "It's too cold 🥶!";
-
+                result = "It's too cold 🥶!";
             }
-            return "Ahhh...it's just right 😊!";
+            else
+                result = "Ahhh...it's just right 😊!";
+
+            return result;
         }
 
     }

@@ -56,3 +56,17 @@ Console.WriteLine("Oh no :( It looks like we can't do this - it's too secure!");
 //mySecureBankAccount._accountBalance = 1000000;
 mySecureBankAccount.DisplayAccountBalanceDetails();
 Console.WriteLine("😹 Well I guess that's secure!");
+
+//WEATHER REPORTER
+Console.WriteLine("\n--- WEATHER REPORTER ---\n");
+WeatherReporter wr = new WeatherReporter(LocationCity.London, 8);
+Console.WriteLine(wr.GetWeatherReport());
+
+WeatherReporter wr1 = new(LocationCity.California, 36);
+Console.WriteLine(wr1.GetWeatherReport());
+
+WeatherReporter wr2 = new(LocationCity.CapeTown, 19);
+Console.WriteLine(wr2.GetWeatherReport());
+
+WeatherReporter wr3 = new(LocationCity.Unknown, 24);
+Console.WriteLine(wr3.GetWeatherReport());
